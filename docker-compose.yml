@@ -1,0 +1,51 @@
+services:
+  redroid:
+    image: redroid/redroid:11.0.0-latest
+    container_name: cloudedge-recorder
+    privileged: true
+    ports:
+      - "5555:5555"  # ADB
+    volumes:
+      - /dev/binder1:/dev/binder
+      - /dev/binder2:/dev/hwbinder
+      - /dev/binder3:/dev/vndbinder
+      - redroid_data:/data
+      - ./app/build/outputs/apk/debug:/apk:ro
+    environment:
+      - REDROID_GPU_MODE=guest
+      - REDROID_WIDTH=720
+      - REDROID_HEIGHT=1280
+      - REDROID_DPI=240
+      - RECORDING_DURATION_MINUTES=${RECORDING_DURATION_MINUTES:-1}
+      - TZ=Europe/Rome
+    restart: unless-stopped
+    networks:
+      - redroid_net
+
+  sync:
+    image: alpine:latest
+    container_name: cloudedge-sync
+    depends_on:
+      - redroid
+    volumes:
+      - ./recordings:/recordings
+    network_mode: "host"
+    environment:
+      - RECORDING_DURATION_MINUTES=${RECORDING_DURATION_MINUTES:-1}
+    command: >
+      sh -c "apk add --no-cache android-tools &&
+             chmod +x /sync.sh &&
+             SYNC_INTERVAL=$$((RECORDING_DURATION_MINUTES * 60)) &&
+             echo 'Syncing every' $$SYNC_INTERVAL 'seconds (RECORDING_DURATION_MINUTES='$$RECORDING_DURATION_MINUTES')' &&
+             while true; do
+               /sync.sh;
+               sleep $$SYNC_INTERVAL;
+             done"
+    restart: unless-stopped
+
+volumes:
+  redroid_data:
+
+networks:
+  redroid_net:
+    driver: bridge
