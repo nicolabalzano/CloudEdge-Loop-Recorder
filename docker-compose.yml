@@ -6,9 +6,12 @@ services:
     ports:
       - "5555:5555"  # ADB
     volumes:
+      # for other os you have to change this part probably (this is tested for Debian 13)
+      # --------------------------------------
       - /dev/binder1:/dev/binder
       - /dev/binder2:/dev/hwbinder
       - /dev/binder3:/dev/vndbinder
+      # --------------------------------------
       - redroid_data:/data
       - ./app/build/outputs/apk/debug:/apk:ro
     environment:
