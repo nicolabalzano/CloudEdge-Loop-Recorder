@@ -34,10 +34,9 @@ VIDEO_QUALITY=HD
 
 ## Initial Setup
 
-1. **Prepare binder modules** (required for Redroid):
-   ```bash
-   ./setup_binder.sh
-   ```
+1. **Prepare redroid docker and host setup** (required for Redroid):
+   You have to see the docuemntation of Redroid to correct setup the Docker depending on the OS host
+   (https://github.com/remote-android/redroid-doc)
 
 2. **Start the system**:
    ```bash
@@ -83,18 +82,6 @@ adb -s localhost:5555 shell am stopservice com.edgecloudrecorder/com.edgecloudre
 
 # Start
 adb -s localhost:5555 shell am start-foreground-service com.edgecloudrecorder/com.edgecloudrecorder.mearitaskerplugin.recorder.VideoRecorderService
-```
-
-**Container**:
-```bash
-# Stop container
-docker compose down
-
-# Restart container
-docker compose up -d
-
-# Shell into container
-adb -s localhost:5555 shell
 ```
 
 ## Requirements
