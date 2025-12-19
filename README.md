@@ -34,11 +34,12 @@ VIDEO_QUALITY=HD
 
 ## Initial Setup
 
-1. **Prepare redroid docker and host setup** (required for Redroid):
+1. **Prepare redroid docker and host setup** (required for Redroid):<br>
    You have to see the docuemntation of Redroid to correct setup the Docker depending on the OS host
-   (https://github.com/remote-android/redroid-doc)
+   (https://github.com/remote-android/redroid-doc/blob/master/deploy/debian.md)
+   I do it for debian.
 
-2. **Start the system**:
+3. **Start the system**:
    ```bash
    ./setup_redroid.sh
    ```
