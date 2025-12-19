@@ -88,8 +88,7 @@ adb -s localhost:5555 shell am start-foreground-service com.edgecloudrecorder/co
 
 - Docker and Docker Compose
 - ADB (Android Debug Bridge)
-- Linux with kernel supporting binder
-- Binder modules loaded (see `setup_binder.sh`)
+- Setup host and Docker for Redroid
 
 ## Architecture
 
